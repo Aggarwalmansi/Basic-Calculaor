@@ -1,21 +1,39 @@
-const display = document.querySelector('#display');
+const dispaly = document.getElementById('display');
+const buttons = document.querySelectorAll('button');
 
-const buttons = document.querySelectorAll("button");
+let currentInput = '';
 
+buttons.forEach(button => {
+    button.addEventListener("click",(event)=>{
+        const buttonValue = event.target.innerText;
 
-buttons.forEach((item) => {
-    item.oneclick =()=>{
-        if(item.id==='clear'){
-            display.innerText='';
-        } else if(item.id==='backspace'){
-            let string = display.innerText.string();
-            display.innerText = string.substr(0,string.length-1);
+        if (buttonValue === 'C') {
+            currentInput = '';
+            dispaly.innerText= "0";
+        } 
+        else if (buttonValue === '=') {
+            try {
+                currentInput = eval(currentInput).toString();
+                dispaly.innerText = currentInput;
 
+            }
+            catch(error)
+             {
+                updateDisplay('Error');
+                currentInput = '';
+            }
         }
-        else if(display.innerText != "" && item.id=="equa"){
-            display.innerText = eval(display.innerText);
-        }
+        else if (buttonValue ==="<") {
+            currentInput = currentInput.slice(0,-1);
+            dispaly.innerText = currentInput||0;
+        } 
         else{
-            display.innerText +=item.id;
-        }
-}});
+            currentInput += buttonValue;
+            dispaly.innerText = currentInput;
+
+        }   
+
+
+    });
+});    
+
